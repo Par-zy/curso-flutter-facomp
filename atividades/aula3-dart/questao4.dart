@@ -1,7 +1,6 @@
 //Quarta Questão - Aula 3 de dart - 26/07
 
 import 'dart:io';
-import 'dart:math';
 
 double calculaMedia(List<double> notas){
   double soma = 0;
@@ -17,8 +16,8 @@ void main (){
   print("Quantas notas de alunos serão inseridas? ");
   final int quantidadeDeNotas = int.parse(stdin.readLineSync()!);
   
-  for(int i = 0; i < quantidadeDeNotas; i++){
-     print("Insira as notas dos alunos: ");
+  for(int i = 1; i < quantidadeDeNotas + 1; i++){
+     print("Insira a $i° nota dos alunos: ");
      notasDosAlunos.add(double.parse(stdin.readLineSync()!));                   
   }
   final double media = calculaMedia(notasDosAlunos);

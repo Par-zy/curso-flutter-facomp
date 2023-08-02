@@ -1,61 +1,59 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() {
+  runApp(MainApp());
+} 
+
+class MainApp extends StatelessWidget{
+  MainApp({super.key});
 
   final Map<String, List<String>> dados = {
     'Sobremesas':[
-      'Torta de Maçã',
-      'Mousse de Chocolate',
-      'Pudim de Leite Condensado',
+      'Torta de maçã',
+      'Torta de chocolate',
+      'Pudim de Leite Condensado'
     ],
-    'Pratos principais':[
-      'Frango assado com batatas',
+    'Pratos Principais':[
+      'Frango Assado com Batatas',
       'Espaguete à bolonhesa',
       'Risoto de Cogumelos'
     ],
     'Aperitivos':[
       'Bolinhos de queijo',
       'Bruschetta de Tomate e Manjericão',
-      'Canapés de Salmão com Cream Cheese',
+      'Canapés de Salmão com Cream Cheese'
     ],
   };
 
+  final String? categoriaUsuario = null;
+  final String busca = '';
 
-  runApp(MaterialApp(
-    home: Scaffold(
-      appBar: AppBar(title: const Text('Minhas receitas')),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          for (MapEntry<String, List<String>> entry in dados.entries)
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    entry.key,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (String valor in entry.value)
-                      Text(
-                        valor,
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
-                  ],
-                ),
-              ],
-            ),
-        ],
-      ),
-    ),
-  ));
+
+  @override
+  Widget build(BuildContext context){
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(
+          children: dados.entries.map((categoria) {
+            if(categoriaUsuario == null || categoriaUsuario == categoria.key){
+              return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+            if(busca.isEmpty) 
+              Center(child: Text(categoria.key, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),)),
+            for (String prato in categoria.value) 
+              if(prato.contains(busca) || busca.isEmpty) 
+                Text(prato, style: const TextStyle(fontSize: 18))
+          ],
+          );
+            }else{
+              return Container();
+            }
+          })
+          .toList())),
+    );
+  }
 }
